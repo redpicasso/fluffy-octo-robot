@@ -1,0 +1,57 @@
+package com.google.firebase.database.snapshot;
+
+import com.google.firebase.database.snapshot.Node.HashVersion;
+
+/* compiled from: com.google.firebase:firebase-database@@17.0.0 */
+public class BooleanNode extends LeafNode<BooleanNode> {
+    private final boolean value;
+
+    public BooleanNode(Boolean bool, Node node) {
+        super(node);
+        this.value = bool.booleanValue();
+    }
+
+    public Object getValue() {
+        return Boolean.valueOf(this.value);
+    }
+
+    public String getHashRepresentation(HashVersion hashVersion) {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(getPriorityHash(hashVersion));
+        stringBuilder.append("boolean:");
+        stringBuilder.append(this.value);
+        return stringBuilder.toString();
+    }
+
+    public BooleanNode updatePriority(Node node) {
+        return new BooleanNode(Boolean.valueOf(this.value), node);
+    }
+
+    protected LeafType getLeafType() {
+        return LeafType.Boolean;
+    }
+
+    protected int compareLeafValues(BooleanNode booleanNode) {
+        boolean z = this.value;
+        if (z == booleanNode.value) {
+            return 0;
+        }
+        return z ? 1 : -1;
+    }
+
+    public boolean equals(Object obj) {
+        boolean z = false;
+        if (!(obj instanceof BooleanNode)) {
+            return false;
+        }
+        BooleanNode booleanNode = (BooleanNode) obj;
+        if (this.value == booleanNode.value && this.priority.equals(booleanNode.priority)) {
+            z = true;
+        }
+        return z;
+    }
+
+    public int hashCode() {
+        return this.value + this.priority.hashCode();
+    }
+}

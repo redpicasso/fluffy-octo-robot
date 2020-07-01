@@ -1,0 +1,25 @@
+package com.google.android.cameraview;
+
+import android.annotation.TargetApi;
+import android.content.Context;
+import android.hardware.camera2.params.StreamConfigurationMap;
+import android.os.Handler;
+import android.util.Size;
+
+@TargetApi(23)
+class Camera2Api23 extends Camera2 {
+    Camera2Api23(Callback callback, PreviewImpl previewImpl, Context context, Handler handler) {
+        super(callback, previewImpl, context, handler);
+    }
+
+    protected void collectPictureSizes(SizeMap sizeMap, StreamConfigurationMap streamConfigurationMap) {
+        if (streamConfigurationMap.getHighResolutionOutputSizes(256) != null) {
+            for (Size size : streamConfigurationMap.getHighResolutionOutputSizes(256)) {
+                sizeMap.add(new Size(size.getWidth(), size.getHeight()));
+            }
+        }
+        if (sizeMap.isEmpty()) {
+            super.collectPictureSizes(sizeMap, streamConfigurationMap);
+        }
+    }
+}

@@ -1,0 +1,10 @@
+package com.google.firebase.storage;
+
+import com.google.firebase.annotations.PublicApi;
+
+@PublicApi
+/* compiled from: com.google.firebase:firebase-storage@@17.0.0 */
+public interface OnPausedListener<TProgress> {
+    @PublicApi
+    void onPaused(TProgress tProgress);
+}
